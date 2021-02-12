@@ -490,6 +490,8 @@ def prepareStages(Map defaultOptions, Map appConfigs) {
                     image: appOptions['image'],
                     namespace: appOptions['namespace'],
                     cloud: appOptions['cloud'],
+                    volumes: [persistentVolumeClaim(claimName: "screenshots", mountPath: "/screenshots")],
+                    envVars: [envVar(key: 'SCREENSHOTS_DIR', value: '/screenshots')]
                 ]
                 openShiftUtils.withNodeSelector(withNodeParams, appOptions['ui']) {
                     createTestStages(appName, appConfig)
